@@ -24,6 +24,7 @@
             background-color: var(--bg);
             color: var(--text-main);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         /* --- Navigation --- */
@@ -138,12 +139,13 @@
         }
 
         .btn-link { 
+            display: inline-block;
             color: var(--gold); 
             text-decoration: none; 
             font-size: 0.75rem; 
             font-weight: 600; 
             border: 1px solid var(--gold);
-            padding: 10px 25px;
+            padding: 12px 30px;
             letter-spacing: 1.5px;
             transition: all 0.3s;
         }
@@ -152,7 +154,7 @@
             color: white;
         }
 
-        /* --- Portrait Gallery --- */
+        /* --- Portrait Gallery (3 Images) --- */
         .gallery-title {
             font-family: 'Bodoni Moda', serif;
             text-align: center;
@@ -242,6 +244,7 @@
         .designer-credit:hover { color: var(--gold); }
         .insta-icon { width: 14px; height: 14px; fill: currentColor; }
 
+        /* Animation */
         .section { opacity: 0; transform: translateY(30px); transition: 1s ease-out; }
         .section.show { opacity: 1; transform: translateY(0); }
 
@@ -266,7 +269,7 @@
 
 <div class="invite-msg section">
     <h2>An Invitation to Love</h2>
-    <p>We are so happy to start this journey and would love for you to be part of our special day. Your presence is the greatest gift we could ask for as we celebrate our union and the beautiful future ahead.</p>
+    <p>We are so happy to start this journey and would love for you to be part of our special day. Your presence is the greatest gift we could ask for as we celebrate our union.</p>
 </div>
 
 <div class="countdown-row section">
@@ -281,19 +284,19 @@
         <div class="event-card">
             <h3>The Wedding Ceremony</h3>
             <p class="event-details">
-                April 05, 2026 | 10:00 AM<br>
+                April 05, 2026 | 10:00 AM (IST)<br>
                 P K Karunakaran Hall
             </p>
-            <a href="#" class="btn-link">GET DIRECTIONS</a>
+            <a href="https://maps.google.com" target="_blank" class="btn-link">GET DIRECTIONS</a>
         </div>
     </div>
 
     <div id="gallery" class="section">
         <h2 class="gallery-title">Captured Memories</h2>
         <div class="photo-grid">
-            <div class="photo-item"><img src="https://raw.githubusercontent.com/DearlyWed/akshaiwedsaparna/main/Image01.jpg"></div>
-            <div class="photo-item"><img src="https://raw.githubusercontent.com/DearlyWed/akshaiwedsaparna/main/Image02.jpg"></div>
-            <div class="photo-item centered"><img src="https://raw.githubusercontent.com/DearlyWed/akshaiwedsaparna/main/image03.jpg"></div>
+            <div class="photo-item"><img src="https://raw.githubusercontent.com/DearlyWed/akshaiwedsaparna/main/Image01.jpg" alt="Memory 1"></div>
+            <div class="photo-item"><img src="https://raw.githubusercontent.com/DearlyWed/akshaiwedsaparna/main/Image02.jpg" alt="Memory 2"></div>
+            <div class="photo-item centered"><img src="https://raw.githubusercontent.com/DearlyWed/akshaiwedsaparna/main/image03.jpg" alt="Memory 3"></div>
         </div>
     </div>
 
@@ -301,7 +304,7 @@
         <h2 style="font-family: 'Bodoni Moda'; text-align: center; font-size: 2.2rem; margin-bottom: 40px;">Wishes & Blessings</h2>
         <form id="wish-form">
             <input type="text" id="guest-name" placeholder="Your Name" required>
-            <textarea id="guest-message" rows="4" placeholder="Write a message..." required></textarea>
+            <textarea id="guest-message" rows="4" placeholder="Write a message for the couple..." required></textarea>
             <button type="submit" class="btn-submit">SEND BLESSING</button>
         </form>
         <div id="wishes-container" style="max-width: 600px; margin: 0 auto;"></div>
@@ -362,10 +365,18 @@
     }, {threshold: 0.1});
     document.querySelectorAll('.section').forEach(s => obs.observe(s));
 
-    const target = new Date("April 05, 2026 10:00:00").getTime();
+    // TARGET DATE: April 5, 2026, 10:00 AM India Time (UTC +5:30)
+    const target = new Date("2026-04-05T10:00:00+05:30").getTime();
+
     setInterval(() => {
         const now = new Date().getTime();
         const d = target - now;
+
+        if (d < 0) {
+            document.querySelectorAll('.num').forEach(el => el.innerText = "00");
+            return;
+        }
+
         document.getElementById('d').innerText = String(Math.floor(d / 86400000)).padStart(2, '0');
         document.getElementById('h').innerText = String(Math.floor((d % 86400000) / 3600000)).padStart(2, '0');
         document.getElementById('m').innerText = String(Math.floor((d % 3600000) / 60000)).padStart(2, '0');
